@@ -44,9 +44,6 @@ def create_docker_image(binary_path, processor, framework_version, python_versio
     #  Build final image
     print('Building final image...')
     subprocess.call(['python', 'setup.py', 'bdist_wheel'], cwd='{}/..'.format(PATH_TO_SCRIPT))
-    output_file = glob.glob('{}/../dist/sagemaker_pytorch_container-*.tar.gz'.format(PATH_TO_SCRIPT))[0]
-    output_filename = output_file.split('/')[-1]
-    shutil.copyfile(output_file, '{}/{}'.format(final_docker_path, output_filename))
 
     final_image_repository = final_image_repository if final_image_repository else 'preprod-pytorch'
     final_image_tags = final_image_tags if final_image_tags else ['{}-{}-{}'.format(framework_version, processor, py_v)]
