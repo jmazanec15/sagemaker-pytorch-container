@@ -39,7 +39,7 @@ def create_docker_image(binary_path, processor, framework_version, python_versio
     # Build base image
     print('Building base image...')
     image_name = 'pytorch-base:{}-{}-{}'.format(framework_version, processor,  py_v)
-    subprocess.call([DOCKER, 'build', '-t', image_name, '-f', base_docker_path, '.'])
+    subprocess.call([DOCKER, 'build', '-t', image_name, '--build-arg', 'python_version={}'.format(py_v), '-f', base_docker_path, '.'])
 
     #  Build final image
     print('Building final image...')
@@ -52,7 +52,7 @@ def create_docker_image(binary_path, processor, framework_version, python_versio
         command_list.append('-t')
         command_list.append('{}:{}'.format(final_image_repository, tag))
 
-    if binary_file == 'None':
+    if binary_path == 'None':
         command_list.extend(['--build-arg', 'py_version={}'.format(py_v[-1]),
                         '-f', 'Dockerfile.{}'.format(processor), '.'])
     else:
