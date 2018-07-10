@@ -27,13 +27,14 @@ def create_docker_image(binary_path, processor, framework_version, python_versio
     final_docker_path = '{}/../docker/{}/final'.format(PATH_TO_SCRIPT, framework_version)
 
     # Get binary file
-    print('Getting binary...')
-    binary_filename = binary_path.split('/')[-1]
-    if os.path.isfile(binary_path):
-        shutil.copyfile(binary_path, '{}/{}'.format(final_docker_path, binary_filename))
-    else:
-        with open('{}/{}'.format(final_docker_path, binary_filename), 'wb') as binary_file:
-            subprocess.call(['curl', binary_path], stdout=binary_file)
+    if binary_path != 'None':
+        print('Getting binary...')
+        binary_filename = binary_path.split('/')[-1]
+        if os.path.isfile(binary_path):
+            shutil.copyfile(binary_path, '{}/{}'.format(final_docker_path, binary_filename))
+        else:
+            with open('{}/{}'.format(final_docker_path, binary_filename), 'wb') as binary_file:
+                subprocess.call(['curl', binary_path], stdout=binary_file)
 
     # Build base image
     print('Building base image...')
@@ -54,9 +55,13 @@ def create_docker_image(binary_path, processor, framework_version, python_versio
         command_list.append('-t')
         command_list.append('{}:{}'.format(final_image_repository, tag))
 
-    command_list.extend(['--build-arg', 'py_version={}'.format(py_v[-1]),
-                    '--build-arg', 'framework_installable={}'.format(binary_filename),
-                    '-f', 'Dockerfile.{}'.format(processor), '.'])
+    if binary_file == 'None':
+        command_list.extend(['--build-arg', 'py_version={}'.format(py_v[-1]),
+                        '-f', 'Dockerfile.{}'.format(processor), '.'])
+    else:
+        command_list.extend(['--build-arg', 'py_version={}'.format(py_v[-1]),
+                        '--build-arg', 'framework_installable={}'.format(binary_filename),
+                        '-f', 'Dockerfile.{}'.format(processor), '.'])
     subprocess.call(command_list, cwd=final_docker_path)
 
 if __name__ == '__main__':
