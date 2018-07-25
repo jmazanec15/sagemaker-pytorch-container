@@ -60,9 +60,9 @@ def build_docker_image(framework_version, python_version, processor, binary_path
         final_command_list.extend(['--build-arg', 'framework_installable={}'.format(binary_filename)])
 
     final_command_list.extend(['--build-arg', 'py_version={}'.format(py_v[-1]), '-f',
-                               'Dockerfile.{}'.format(processor), '.'])
+                               os.path.join(final_docker_path, 'Dockerfile.{}'.format(processor)), '.'])
 
-    subprocess.call(final_command_list, cwd='{}'.format(final_docker_path))
+    subprocess.call(final_command_list, cwd='{}'.format(main_directory_path))
 
 def main():
     # Parse command line options
