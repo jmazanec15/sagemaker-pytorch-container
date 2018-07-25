@@ -50,4 +50,5 @@ Notes
 
 - `Only versions that have Dockerfiles in this repository can be built`
 - `Python version must have 3 sections (i.e. 2.7.0 or 3.6.0)`
-- `Framework version must have 3 sections (i.e. 1.8.0)`
+- `Framework version must have 3 sections (i.e. 1.1.0)`
+- `Right now, the Dockerfiles do not support adding a binary, so replace binary_path with None to build with defaults`
