@@ -9,7 +9,6 @@ import os
 import requests
 import shutil
 import subprocess
-import sys
 
 def build_docker_image(framework_version, python_version, processor, binary_path, final_image_repository,
                         final_image_tags, docker, main_directory_path):
