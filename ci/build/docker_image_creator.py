@@ -66,11 +66,11 @@ def build_docker_image(framework_version, python_version, processor, binary_path
 
 def main():
     # Parse command line options
-    parser = argparse.ArgumentParser(description='Build Sagemaker TensorFlow Docker Images')
-    parser.add_argument('framework_version', help='Framework version (i.e. 1.8.0)')
+    parser = argparse.ArgumentParser(description='Build Sagemaker PyTorch Docker Images')
+    parser.add_argument('framework_version', help='Framework version (i.e. 0.4.0)')
     parser.add_argument('python_version', help='Python version to be used (i.e. 2.7.0)')
     parser.add_argument('processor_type', choices=['cpu', 'gpu'], help='gpu if you would like to use GPUs or cpu')
-    parser.add_argument('binary_path', help='Path to the binary. For versions 1.4.1, and 1.5.0 enter \'None\'')
+    parser.add_argument('binary_path', help='Enter None')
     parser.add_argument('--nvidia-docker', action='store_true', help='Enables nvidia-docker usage over docker')
     parser.add_argument('--final-image-repository', default='preprod-tensorflow',
                         help='Name of final docker repo the image is stored in')
